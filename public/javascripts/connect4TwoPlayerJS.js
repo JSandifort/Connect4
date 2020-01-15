@@ -68,11 +68,11 @@ function color(){
     
     if(counter%2 == 0){
         counter++;
-        return "../images/connect4ImageGridYellow.png";
+        return "images/connect4ImageGridYellow.png";
     }
     
     counter++;
-    return "../images/connect4ImageGridRed.png";
+    return "images/connect4ImageGridRed.png";
 }
 function Place(c, x, y){
     
@@ -221,13 +221,13 @@ function check(){
         
         var buttonRematch = document.createElement("img");
         
-        buttonRematch.src = "../images/connect4ImageRematchButton.png";
+        buttonRematch.src = "images/connect4ImageRematchButton.png";
         buttonRematch.setAttribute("id", "ButtonRematch");
         buttonRematch.setAttribute("onclick", "resetGrid()");
         
         var buttonExit = document.createElement("img");
 
-        buttonExit.src = "../images/connect4ImageGameExitButton.png";
+        buttonExit.src = "images/connect4ImageGameExitButton.png";
         buttonExit.setAttribute("id", "buttonExit");
     
         var linkExit = document.createElement("A");
@@ -256,7 +256,7 @@ function resetGrid(){
     
     for(var i = 0; i < blanks.length; i++){
         
-        blanks[i].src = "../images/connect4ImageGridBlank.png";
+        blanks[i].src = "images/connect4ImageGridBlank.png";
         
     }
     document.body.removeChild(document.getElementById("winSection"));
