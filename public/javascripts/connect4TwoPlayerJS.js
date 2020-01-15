@@ -137,15 +137,15 @@ function check(){
             }
             if(yInCol > 3){
                 
-                win(player1);
+                win(player1.getUsername());
                 return;
             }
-            else if(rInCol > 3){
+            if(rInCol > 3){
                 
-                win(player2);
+                win(player2.getUsername());
                 return;
             }
-            else{}
+            
         }    
         
     }
@@ -167,18 +167,18 @@ function check(){
                 rInRow++;
                 yInRow = 0;
             }
-            else{
+            if(grid[j][i].localeCompare("x") == 0){
                 rInRow = 0;
                 yInRow = 0;
             }
     
             if(yInRow > 3){
-                win(player1);
+                win(player1.getUsername());
                 return;   
             }
             
             if(rInRow > 3){
-                win(player2);
+                win(player2.getUsername());
                 return;   
             }
         }
@@ -201,12 +201,12 @@ function check(){
                 //yInDia = 0;
             }  
             if(yInDia > 3){
-                win(player1);
+                win(player1.getUsername());
                 return;   
             }
             
             if(rInDia > 3){
-                win(player2);
+                win(player2.getUsername());
                 return;   
             }
         }
@@ -228,12 +228,12 @@ function check(){
                     //yInDia = 0;
                 }  
                 if(yInDia > 3){
-                    win(player1);
+                    win(player1.getUsername());
                     return;   
                 }
                 
                 if(rInDia > 3){
-                    win(player2);
+                    win(player2.getUsername());
                     return;   
                 }
             }
@@ -241,26 +241,26 @@ function check(){
     }
 }
     function win(winner){
-        
+        alert(1);   
         //find which player is the winner
         if(winner.localeCompare(player1.getUsername()) == 0){
         
             game.incrPlayer1Score();
-            var string = document.createTextNode(winner + " is the winner!");
+            var string = document.createTextNode(player1.getUsername() + " is the winner!");
         } else if(winner.localeCompare(player2.getUsername()) == 0){
         
             game.incrPlayer2Score();
-            var string = document.createTextNode(winner + " is the winner!");
+            var string = document.createTextNode(player2.getUsername() + " is the winner!");
         }
         else{
 
             var string = document.createTextNode("It is a draw!");
 
         }
-        
+        alert(2);
         var score = document.getElementById("score");
-        var scoreTxt = game.getPlayer1Score.toString() + " - " + game.getPlayer2Score.toString();
-        
+        var scoreTxt = game.getPlayer1Score() + " - " + game.getPlayer2Score();
+        alert(3);
         var winSection = document.createElement("SECTION");
         winSection.setAttribute("id", "winSection");
 
@@ -280,8 +280,8 @@ function check(){
         buttonExit.setAttribute("id", "buttonExit");
         buttonExit.setAttribute("onclick", "exit()");
     
-        //var linkExit = document.createElement("A");
-        //linkExit.href = "Connect4MainMenu.html"; 
+        var linkExit = document.createElement("A");
+        linkExit.href = "Connect4MainMenu.html"; 
 
         
         linkExit.appendChild(buttonExit);
