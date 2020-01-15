@@ -8,6 +8,7 @@ function Player(id, username){
     this.setID = function(id){ this.id = id; };
     this.addToTotal = function(points){this.totalPoints += points};
     this.getTotalScore = function(){return this.totalPoints};
+    this.getUsername = function(){return this.username};
 }
 
 function Game(id, player1, player2){
@@ -96,11 +97,11 @@ function color(){
     
     if(counter%2 == 0){
         counter++;
-        return "../images/connect4ImageGridYellow.png";
+        return "images/connect4ImageGridYellow.png";
     }
     
     counter++;
-    return "../images/connect4ImageGridRed.png";
+    return "images/connect4ImageGridRed.png";
 }
 function Place(c, x, y){
     
@@ -112,6 +113,9 @@ function check(){
     
     if(counter < 7){
         return;
+    }
+    if(counter == 42){
+        win("draw");
     }
 
     //vertical check
@@ -125,6 +129,10 @@ function check(){
             }
             else if(grid[i][j].localeCompare("r") == 0){
                 rInCol++;
+                yInCol = 0;
+            }
+            else{
+                rInCol = 0;
                 yInCol = 0;
             }
             if(yInCol > 3){
@@ -159,6 +167,11 @@ function check(){
                 rInRow++;
                 yInRow = 0;
             }
+            else{
+                rInRow = 0;
+                yInRow = 0;
+            }
+    
             if(yInRow > 3){
                 win(player1);
                 return;   
@@ -230,13 +243,19 @@ function check(){
     function win(winner){
         
         //find which player is the winner
-        if(winner.localeCompare(player1) == 0){
+        if(winner.localeCompare(player1.getUsername()) == 0){
         
             game.incrPlayer1Score();
-        }
-        else{
+            var string = document.createTextNode(winner + " is the winner!");
+        } else if(winner.localeCompare(player2.getUsername()) == 0){
         
             game.incrPlayer2Score();
+            var string = document.createTextNode(winner + " is the winner!");
+        }
+        else{
+
+            var string = document.createTextNode("It is a draw!");
+
         }
         
         var score = document.getElementById("score");
@@ -247,17 +266,17 @@ function check(){
 
         var p = document.createElement("P");
         p.setAttribute("id", "pText");
-        var string = document.createTextNode(winner + " is the winner!");
+        
         
         var buttonRematch = document.createElement("img");
         
-        buttonRematch.src = "../images/connect4ImageRematchButton.png";
+        buttonRematch.src = "images/connect4ImageRematchButton.png";
         buttonRematch.setAttribute("id", "ButtonRematch");
         buttonRematch.setAttribute("onclick", "resetGrid()");
         
         var buttonExit = document.createElement("img");
 
-        buttonExit.src = "../images/connect4ImageGameExitButton.png";
+        buttonExit.src = "images/connect4ImageGameExitButton.png";
         buttonExit.setAttribute("id", "buttonExit");
         buttonExit.setAttribute("onclick", "exit()");
     
@@ -287,7 +306,7 @@ function resetGrid(){
     
     for(var i = 0; i < blanks.length; i++){
         
-        blanks[i].src = "../images/connect4ImageGridBlank.png";
+        blanks[i].src = "images/connect4ImageGridBlank.png";
         
     }
     document.body.removeChild(document.getElementById("winSection"));

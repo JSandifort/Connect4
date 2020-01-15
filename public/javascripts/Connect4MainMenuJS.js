@@ -1,18 +1,6 @@
 var userName ="fail";
 var counter = 0;
-function userNameInput(){
 
-    
-    fs.readFile('../text/onnect4TextUsers.txt', function (err, data) {
-        if (err) {
-           return alert(err);
-        }
-        return alert(data);
-    });
-    alert("hello");
-    userName = document.getElementById("userInput").value;
-    return;
-}
 function setUserName(){
     var userNameSection = document.createElement("SECTION");
     userNameSection.setAttribute("id","userNameSection"); 
@@ -25,11 +13,11 @@ function setUserName(){
 }
 function openSettings(){
     if((counter)%2 == 0){
-        var source = "../images/connect4ImageFullScreenButtonOff.png";
+        var source = "images/connect4ImageFullScreenButtonOff.png";
         var txt = " fullscreen: off";
     }
     else{
-        var source = "../images/connect4ImageFullScreenButtonOn.png";
+        var source = "images/connect4ImageFullScreenButtonOn.png";
         var txt = " fullscreen: on";
     }
 
@@ -38,7 +26,7 @@ function openSettings(){
     fullScreenButton.setAttribute("onclick", "fullScreen()");
 
     var settingsExit = document.createElement("img");
-    settingsExit.src = "../images/connect4ImageSettingsExitButton.png";
+    settingsExit.src = "images/connect4ImageSettingsExitButton.png";
     settingsExit.setAttribute("id", "exitButton");
     settingsExit.setAttribute("onclick", "closeSettings()");
     
@@ -64,7 +52,7 @@ function closeSettings(){
 function openTournament(){
     
     var tournamentExit = document.createElement("img");
-    tournamentExit.src = "../images/connect4ImageSettingsExitButton.png";
+    tournamentExit.src = "images/connect4ImageSettingsExitButton.png";
     tournamentExit.setAttribute("id", "exitButton");
     tournamentExit.setAttribute("onclick", "closeTournament()");
     
@@ -85,7 +73,7 @@ function fullScreen(){
         document.getElementById("settings").removeChild(document.getElementById("paraFullScreen"));
         
         var fullScreenButton = document.createElement("img");
-        fullScreenButton.src = "../images/connect4ImageFullScreenButtonOn.png";
+        fullScreenButton.src = "images/connect4ImageFullScreenButtonOn.png";
         fullScreenButton.setAttribute("onclick", "fullScreen()");
 
         var paraFullScreen = document.createElement("P");
@@ -103,7 +91,7 @@ function fullScreen(){
         document.getElementById("settings").removeChild(document.getElementById("paraFullScreen"));
         
         var fullScreenButton = document.createElement("img");
-        fullScreenButton.src = "../images/connect4ImageFullScreenButtonOff.png";
+        fullScreenButton.src = "images/connect4ImageFullScreenButtonOff.png";
         fullScreenButton.setAttribute("onclick", "fullScreen()");
 
         var paraFullScreen = document.createElement("P");
