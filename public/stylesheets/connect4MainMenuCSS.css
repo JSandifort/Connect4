@@ -6,6 +6,7 @@ body{
 }
 #Buttons{
     text-align: right;
+    
 }
 #ButtonGame{
     text-align: center;
@@ -15,6 +16,10 @@ body{
 }
 #pTwoPlayers{
     vertical-align: -65px;
+}
+#pExit, #pSettings, #pTournament{
+    height: 50px;
+    width: 50px;
 }
 #settings{
     height: 891px;
