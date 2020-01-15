@@ -1,0 +1,59 @@
+body{
+    background-image: url("../images/connect4ImageMainMenuBG.png");
+    
+    background-position-x: center;
+    
+}
+#Buttons{
+    text-align: right;
+}
+#ButtonGame{
+    text-align: center;
+}
+#pFindMatch{
+    vertical-align: -425px;
+}
+#pTwoPlayers{
+    vertical-align: -65px;
+}
+#settings{
+    height: 891px;
+    width: 470px;
+    background-image: url("../images/connect4ImageSettingsBG.png");
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+#exitButton{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+#tournament{
+    height: 941px;
+    width: 470px;
+    background-image: url("../images/connect4ImageTournamentBG.png");
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+#userNameSection{
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    left: 50px;
+    bottom: 0px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+    color:  #353d61;
+}
+#paraFullScreen{
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+    
+    color: #f5756a;
+
+}
