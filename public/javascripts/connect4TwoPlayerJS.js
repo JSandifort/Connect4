@@ -1,8 +1,36 @@
-var player1 = "player1";
-var player2 = "player2";
+function Player(id, username){
+    
+    this.id = id;
+    this.username = username;
+    this.totalPoints = 0;
 
-var player1Score = 0;
-var player2Score = 0;
+    this.getID = function(){ return this.id; };
+    this.setID = function(id){ this.id = id; };
+    this.addToTotal = function(points){this.totalPoints += points};
+    this.getTotalScore = function(){return this.totalPoints};
+}
+
+function Game(id, player1, player2){
+    
+    this.id = id;
+    this.player1 = player1;
+    this.player2 = player2;
+    this.scorePlayer1 = 0;
+    this.scorePlayer2 = 0;
+    
+    this.getID = function(){ return this.id; };
+    this.setID = function(id){ this.id = id; };
+    this.getPlayer1Score = function(){ return this.player1Score};
+    this.getPlayer2Score = function(){ return this.player2Score};
+    this.incrPlayer1Score = function(){ this.player1Score++};
+    this.incrPlayer2Score = function(){ this.player2Score++};
+    
+}
+
+var player1 = new Player(0, "player1");
+var player2 = new Player(1, "player2");
+
+var game = new Game(3, player1, player2);
 
 var counter = 0;
 var column1 = ["x", "x", "x", "x", "x", "x"];
@@ -85,6 +113,7 @@ function check(){
     if(counter < 7){
         return;
     }
+
     //vertical check
     for(var i = 0; i < grid.length; i++){
         var yInCol = 0;
@@ -200,17 +229,18 @@ function check(){
 }
     function win(winner){
         
+        //find which player is the winner
         if(winner.localeCompare(player1) == 0){
-            player1Score++;
+        
+            game.incrPlayer1Score();
         }
         else{
-            player2Score++;
+        
+            game.incrPlayer2Score();
         }
         
         var score = document.getElementById("score");
-        var scoreTxt = player1Score.toString() + " - " + player2Score.toString();
-        
-        
+        var scoreTxt = game.getPlayer1Score.toString() + " - " + game.getPlayer2Score.toString();
         
         var winSection = document.createElement("SECTION");
         winSection.setAttribute("id", "winSection");
@@ -229,9 +259,10 @@ function check(){
 
         buttonExit.src = "../images/connect4ImageGameExitButton.png";
         buttonExit.setAttribute("id", "buttonExit");
+        buttonExit.setAttribute("onclick", "exit()");
     
-        var linkExit = document.createElement("A");
-        linkExit.href = "Connect4MainMenu.html"; 
+        //var linkExit = document.createElement("A");
+        //linkExit.href = "Connect4MainMenu.html"; 
 
         
         linkExit.appendChild(buttonExit);
@@ -261,5 +292,12 @@ function resetGrid(){
     }
     document.body.removeChild(document.getElementById("winSection"));
     
+}
+
+function exit(){
+
+    player1.addToTotal(game.getPlayer1Score);
+    player2.addToTotal(game.getPlayer2Score);
+
 }
 
