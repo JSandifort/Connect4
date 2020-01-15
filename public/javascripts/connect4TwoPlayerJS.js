@@ -21,17 +21,17 @@ function Game(id, player1, player2){
     
     this.getID = function(){ return this.id; };
     this.setID = function(id){ this.id = id; };
-    this.getPlayer1Score = function(){ return this.player1Score};
-    this.getPlayer2Score = function(){ return this.player2Score};
-    this.incrPlayer1Score = function(){ this.player1Score++};
-    this.incrPlayer2Score = function(){ this.player2Score++};
+    this.getPlayer1Score = function(){ return this.scorePlayer1;};
+    this.getPlayer2Score = function(){ return this.scorePlayer2;};
+    this.incrPlayer1Score = function(){ this.scorePlayer1++;};
+    this.incrPlayer2Score = function(){ this.scorePlayer2++;};
     
 }
 
-var player1 = new Player(0, "player1");
-var player2 = new Player(1, "player2");
+//var p1 = new Player(0, "you");
+//var p2 = new Player(1, "other");
 
-var game = new Game(3, player1, player2);
+var game = new Game(3, new Player(0, "you"), new Player(1, "other"));
 
 var counter = 0;
 var column1 = ["x", "x", "x", "x", "x", "x"];
@@ -110,7 +110,6 @@ function Place(c, x, y){
     
 }
 function check(){
-    
     if(counter < 7){
         return;
     }
@@ -137,12 +136,12 @@ function check(){
             }
             if(yInCol > 3){
                 
-                win(player1.getUsername());
+                win(game.player1.getUsername());
                 return;
             }
             if(rInCol > 3){
                 
-                win(player2.getUsername());
+                win(game.player2.getUsername());
                 return;
             }
             
@@ -173,12 +172,12 @@ function check(){
             }
     
             if(yInRow > 3){
-                win(player1.getUsername());
+                win(game.player1.getUsername());
                 return;   
             }
             
             if(rInRow > 3){
-                win(player2.getUsername());
+                win(game.player2.getUsername());
                 return;   
             }
         }
@@ -201,12 +200,12 @@ function check(){
                 //yInDia = 0;
             }  
             if(yInDia > 3){
-                win(player1.getUsername());
+                win(game.player1.getUsername());
                 return;   
             }
             
             if(rInDia > 3){
-                win(player2.getUsername());
+                win(game.player2.getUsername());
                 return;   
             }
         }
@@ -228,12 +227,12 @@ function check(){
                     //yInDia = 0;
                 }  
                 if(yInDia > 3){
-                    win(player1.getUsername());
+                    win(game.player1.getUsername());
                     return;   
                 }
                 
                 if(rInDia > 3){
-                    win(player2.getUsername());
+                    win(game.player2.getUsername());
                     return;   
                 }
             }
@@ -241,26 +240,26 @@ function check(){
     }
 }
     function win(winner){
-        alert(1);   
+        
         //find which player is the winner
-        if(winner.localeCompare(player1.getUsername()) == 0){
+        if(winner.localeCompare(game.player1.getUsername()) == 0){
         
             game.incrPlayer1Score();
-            var string = document.createTextNode(player1.getUsername() + " is the winner!");
-        } else if(winner.localeCompare(player2.getUsername()) == 0){
+            var string = document.createTextNode(game.player1.getUsername() + " is the winner!");
+        } else if(winner.localeCompare(game.player2.getUsername()) == 0){
         
             game.incrPlayer2Score();
-            var string = document.createTextNode(player2.getUsername() + " is the winner!");
+            var string = document.createTextNode(game.player2.getUsername() + " is the winner!");
         }
         else{
 
             var string = document.createTextNode("It is a draw!");
 
         }
-        alert(2);
+        
         var score = document.getElementById("score");
-        var scoreTxt = game.getPlayer1Score() + " - " + game.getPlayer2Score();
-        alert(3);
+        var scoreTxt = game.getPlayer1Score() + " - " + game.getPlayer2Score(); 
+        
         var winSection = document.createElement("SECTION");
         winSection.setAttribute("id", "winSection");
 
