@@ -1,0 +1,51 @@
+body{
+    background-image: url("../images/connect4ImageGameBG.png");
+
+    background-position-x: center;
+    
+}
+#Buttons{
+    text-align: right;
+}
+#grid{
+    position: absolute;
+    top: 100px;
+    left: 515px;
+    
+}
+#winSection{
+    background-image: url("../images/connect4ImageWinSectionBG.png");
+    width: 500px;
+    height: 300px;
+    position: absolute;
+    top: 150px;
+    left: 515px;
+    
+}
+#ButtonRematch{
+    position: absolute;
+    top: 100px;
+    left: 50px;  
+}
+#pText{
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+}
+#score{
+    height: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    color: white;
+    font-size: 40px;
+    position: absolute; 
+    bottom: 0px;
+    left: 725px;
+}
+#buttonExit{
+    position: absolute;
+    top: 100px;
+    right: 50px;
+}
+
+
