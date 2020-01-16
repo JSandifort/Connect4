@@ -23,8 +23,8 @@ function Game(id, player1, player2){
     this.setID = function(id){ this.id = id; };
     this.getPlayer1Score = function(){ return this.player1Score};
     this.getPlayer2Score = function(){ return this.player2Score};
-    this.incrPlayer1Score = function(){ this.player1Score++};
-    this.incrPlayer2Score = function(){ this.player2Score++};
+    this.incrPlayer1Score = function(){ this.player1Score += 1};
+    this.incrPlayer2Score = function(){ this.player2Score += 1};
     
 }
 
@@ -114,6 +114,7 @@ function check(){
     if(counter < 7){
         return;
     }
+
     if(counter == 42){
         win("draw");
     }
@@ -173,12 +174,12 @@ function check(){
             }
     
             if(yInRow > 3){
-                win(player1);
+                win(player1.getUsername());
                 return;   
             }
             
             if(rInRow > 3){
-                win(player2);
+                win(player2.getUsername());
                 return;   
             }
         }
@@ -201,12 +202,12 @@ function check(){
                 //yInDia = 0;
             }  
             if(yInDia > 3){
-                win(player1);
+                win(player1.getUsername());
                 return;   
             }
             
             if(rInDia > 3){
-                win(player2);
+                win(player2.getUsername());
                 return;   
             }
         }
@@ -228,12 +229,12 @@ function check(){
                     //yInDia = 0;
                 }  
                 if(yInDia > 3){
-                    win(player1);
+                    win(player1.getUsername());
                     return;   
                 }
                 
                 if(rInDia > 3){
-                    win(player2);
+                    win(player2.getUsername());
                     return;   
                 }
             }
@@ -247,6 +248,7 @@ function check(){
         
             game.incrPlayer1Score();
             var string = document.createTextNode(winner + " is the winner!");
+
         } else if(winner.localeCompare(player2.getUsername()) == 0){
         
             game.incrPlayer2Score();
@@ -259,7 +261,7 @@ function check(){
         }
         
         var score = document.getElementById("score");
-        var scoreTxt = game.getPlayer1Score.toString() + " - " + game.getPlayer2Score.toString();
+        var scoreTxt = game.getPlayer1Score() + " - " + game.getPlayer2Score();
         
         var winSection = document.createElement("SECTION");
         winSection.setAttribute("id", "winSection");
@@ -280,8 +282,8 @@ function check(){
         buttonExit.setAttribute("id", "buttonExit");
         buttonExit.setAttribute("onclick", "exit()");
     
-        //var linkExit = document.createElement("A");
-        //linkExit.href = "Connect4MainMenu.html"; 
+        var linkExit = document.createElement("A");
+        linkExit.href = "Connect4MainMenu.html"; 
 
         
         linkExit.appendChild(buttonExit);
