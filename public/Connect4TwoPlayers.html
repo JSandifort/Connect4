@@ -4,7 +4,7 @@
         <title>Two Players</title>
         <link href="stylesheets/connect4TwoPlayersCSS.css" rel="stylesheet" type="text/css">
     </head>
-    <body onload="getScore()"></body>
+    <body onload="startGame()">
         <section id="Buttons">
             <a href="Connect4MainMenu.html"><img  id="pExit" src="images/icons/exit_blue.png" alt=""></a>
         </section>
@@ -65,7 +65,9 @@
                 <img onclick="col7()" class="col7" src="images/Connect4ImageGridBlank.png">
             </p>
         </section>
-        
+        <section id="clock">
+            0:00
+        </section>
         <p id = "score">0 - 0</p>
         
         <script src="javascripts/connect4TwoPlayerJS.js "></script>    

@@ -1,3 +1,12 @@
+var clockCounter = 0;
+var counter = 0;
+p1 = new Player(0, "you")
+p2 = new Player(1, "other player")
+var game = new Game(0, p1, p2);
+//var currentTime = (new Date()).getSeconds();
+
+//clock(((new Date()).getSeconds() + currentTime));
+
 function Player(id, username){
     
     this.id = id;
@@ -28,22 +37,62 @@ function Game(id, player1, player2){
     
 }
 
-//var p1 = new Player(0, "you");
-//var p2 = new Player(1, "other");
+// loading the page
+function startGame(){
+    var functions = ["col1()", "col2()", "col3()", "col4()", "col5()", "col6()", "col7()"];
 
-var game = new Game(3, new Player(0, "you"), new Player(1, "other"));
+    grid = [["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"]];
+    
+    var blanks = document.getElementById("grid").getElementsByTagName("img");
+    // reset the grid
+    for(var i = 0; i < blanks.length; i++){
+        
+        blanks[i].src = "images/connect4ImageGridBlank.png";
+        blanks[i].setAttribute("onclick",functions[i%functions.length]);
+        
+    }
+    // reset win section
+    if(document.getElementById("winSection") !== null){
+        document.body.removeChild(document.getElementById("winSection"));
+    }
+    
+    //reset the name sections 
+    if(document.getElementById("p1Section") !== null){
+        document.body.removeChild(document.getElementById("p1Section"));
+    }
+    if(document.getElementById("p2Section") !== null){
+        document.body.removeChild(document.getElementById("p2Section"));
+    }
+    // create new name sections
+    var p1Section = document.createElement("section");
+    p1Section.setAttribute("id","p1Section");
+    p1Section.appendChild(document.createTextNode(game.player1.getUsername()));
+    document.body.appendChild(p1Section);
+    
+    var p2Section = document.createElement("section");
+    p2Section.setAttribute("id","p2Section");
+    p2Section.appendChild(document.createTextNode(game.player2.getUsername()));
+    document.body.appendChild(p2Section);
+    
+    // create clock
+    
 
-var counter = 0;
-var column1 = ["x", "x", "x", "x", "x", "x"];
-var column2 = ["x", "x", "x", "x", "x", "x"];
-var column3 = ["x", "x", "x", "x", "x", "x"];
-var column4 = ["x", "x", "x", "x", "x", "x"];
-var column5 = ["x", "x", "x", "x", "x", "x"];
-var column6 = ["x", "x", "x", "x", "x", "x"];
-var column7 = ["x", "x", "x", "x", "x", "x"];
-
-var grid = [column1, column2, column3, column4, column5, column6, column7];
-
+}
+function clock(time){
+    var rest = 15-time;
+    document.getElementById("clock").innerHTML = "0:" + rest; 
+    
+    if(time == 15){
+     clockCounter = 0;
+     counter++;
+    }
+}
 
 function col1(){
     dropPiece("col1", 0);
@@ -240,7 +289,14 @@ function check(){
     }
 }
     function win(winner){
+        //block piece placing
+        var fields = document.getElementById("grid").getElementsByTagName("img");
+        for(var i = 0; i < fields.length; i++){
         
+            
+            fields[i].removeAttribute("onclick");
+            
+        }
         //find which player is the winner
         if(winner.localeCompare(game.player1.getUsername()) == 0){
         
@@ -256,7 +312,7 @@ function check(){
             var string = document.createTextNode("It is a draw!");
 
         }
-        
+        // update score board
         var score = document.getElementById("score");
         var scoreTxt = game.getPlayer1Score() + " - " + game.getPlayer2Score(); 
         
@@ -271,7 +327,7 @@ function check(){
         
         buttonRematch.src = "images/connect4ImageRematchButton.png";
         buttonRematch.setAttribute("id", "ButtonRematch");
-        buttonRematch.setAttribute("onclick", "resetGrid()");
+        buttonRematch.setAttribute("onclick", "startGame()");
         
         var buttonExit = document.createElement("img");
 
@@ -290,26 +346,6 @@ function check(){
         winSection.appendChild(linkExit);
         document.body.appendChild(winSection);
         score.innerHTML = scoreTxt;
-}
-function resetGrid(){
-    
-    grid = [["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"]];
-    
-    var blanks = document.getElementById("grid").getElementsByTagName("img");
-    
-    for(var i = 0; i < blanks.length; i++){
-        
-        blanks[i].src = "images/connect4ImageGridBlank.png";
-        
-    }
-    document.body.removeChild(document.getElementById("winSection"));
-    
 }
 
 function exit(){
