@@ -37,6 +37,28 @@ function Game(id, player1, player2){
     
 }
 
+//simple timer for the elapsed time
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var timer = setInterval(setTime, 1000);
+var timeElapsed = 0;
+
+function setTime() {
+++timeElapsed;
+secondsLabel.innerHTML = pad(timeElapsed % 60);
+minutesLabel.innerHTML = pad(parseInt(timeElapsed / 60));
+}
+
+function pad(val) {
+var valString = val + "";
+if (valString.length < 2) {
+    return "0" + valString;
+} else {
+    return valString;
+}
+}
+
+
 // loading the page
 function startGame(){
     var functions = ["col1()", "col2()", "col3()", "col4()", "col5()", "col6()", "col7()"];
