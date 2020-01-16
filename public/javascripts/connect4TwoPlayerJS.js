@@ -1,3 +1,12 @@
+var clockCounter = 0;
+var counter = 0;
+p1 = new Player(0, "you")
+p2 = new Player(1, "other player")
+var game = new Game(0, p1, p2);
+//var currentTime = (new Date()).getSeconds();
+
+//clock(((new Date()).getSeconds() + currentTime));
+
 function Player(id, username){
     
     this.id = id;
@@ -21,29 +30,69 @@ function Game(id, player1, player2){
     
     this.getID = function(){ return this.id; };
     this.setID = function(id){ this.id = id; };
-    this.getPlayer1Score = function(){ return this.player1Score};
-    this.getPlayer2Score = function(){ return this.player2Score};
-    this.incrPlayer1Score = function(){ this.player1Score += 1};
-    this.incrPlayer2Score = function(){ this.player2Score += 1};
+    this.getPlayer1Score = function(){ return this.scorePlayer1;};
+    this.getPlayer2Score = function(){ return this.scorePlayer2;};
+    this.incrPlayer1Score = function(){ this.scorePlayer1++;};
+    this.incrPlayer2Score = function(){ this.scorePlayer2++;};
     
 }
 
-var player1 = new Player(0, "player1");
-var player2 = new Player(1, "player2");
+// loading the page
+function startGame(){
+    var functions = ["col1()", "col2()", "col3()", "col4()", "col5()", "col6()", "col7()"];
 
-var game = new Game(3, player1, player2);
+    grid = [["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"], 
+    ["x", "x", "x", "x", "x", "x"]];
+    
+    var blanks = document.getElementById("grid").getElementsByTagName("img");
+    // reset the grid
+    for(var i = 0; i < blanks.length; i++){
+        
+        blanks[i].src = "images/connect4ImageGridBlank.png";
+        blanks[i].setAttribute("onclick",functions[i%functions.length]);
+        
+    }
+    // reset win section
+    if(document.getElementById("winSection") !== null){
+        document.body.removeChild(document.getElementById("winSection"));
+    }
+    
+    //reset the name sections 
+    if(document.getElementById("p1Section") !== null){
+        document.body.removeChild(document.getElementById("p1Section"));
+    }
+    if(document.getElementById("p2Section") !== null){
+        document.body.removeChild(document.getElementById("p2Section"));
+    }
+    // create new name sections
+    var p1Section = document.createElement("section");
+    p1Section.setAttribute("id","p1Section");
+    p1Section.appendChild(document.createTextNode(game.player1.getUsername()));
+    document.body.appendChild(p1Section);
+    
+    var p2Section = document.createElement("section");
+    p2Section.setAttribute("id","p2Section");
+    p2Section.appendChild(document.createTextNode(game.player2.getUsername()));
+    document.body.appendChild(p2Section);
+    
+    // create clock
+    
 
-var counter = 0;
-var column1 = ["x", "x", "x", "x", "x", "x"];
-var column2 = ["x", "x", "x", "x", "x", "x"];
-var column3 = ["x", "x", "x", "x", "x", "x"];
-var column4 = ["x", "x", "x", "x", "x", "x"];
-var column5 = ["x", "x", "x", "x", "x", "x"];
-var column6 = ["x", "x", "x", "x", "x", "x"];
-var column7 = ["x", "x", "x", "x", "x", "x"];
-
-var grid = [column1, column2, column3, column4, column5, column6, column7];
-
+}
+function clock(time){
+    var rest = 15-time;
+    document.getElementById("clock").innerHTML = "0:" + rest; 
+    
+    if(time == 15){
+     clockCounter = 0;
+     counter++;
+    }
+}
 
 function col1(){
     dropPiece("col1", 0);
@@ -110,7 +159,6 @@ function Place(c, x, y){
     
 }
 function check(){
-    
     if(counter < 7){
         return;
     }
@@ -138,15 +186,15 @@ function check(){
             }
             if(yInCol > 3){
                 
-                win(player1);
+                win(game.player1.getUsername());
                 return;
             }
-            else if(rInCol > 3){
+            if(rInCol > 3){
                 
-                win(player2);
+                win(game.player2.getUsername());
                 return;
             }
-            else{}
+            
         }    
         
     }
@@ -168,18 +216,18 @@ function check(){
                 rInRow++;
                 yInRow = 0;
             }
-            else{
+            if(grid[j][i].localeCompare("x") == 0){
                 rInRow = 0;
                 yInRow = 0;
             }
     
             if(yInRow > 3){
-                win(player1.getUsername());
+                win(game.player1.getUsername());
                 return;   
             }
             
             if(rInRow > 3){
-                win(player2.getUsername());
+                win(game.player2.getUsername());
                 return;   
             }
         }
@@ -202,12 +250,12 @@ function check(){
                 //yInDia = 0;
             }  
             if(yInDia > 3){
-                win(player1.getUsername());
+                win(game.player1.getUsername());
                 return;   
             }
             
             if(rInDia > 3){
-                win(player2.getUsername());
+                win(game.player2.getUsername());
                 return;   
             }
         }
@@ -229,12 +277,12 @@ function check(){
                     //yInDia = 0;
                 }  
                 if(yInDia > 3){
-                    win(player1.getUsername());
+                    win(game.player1.getUsername());
                     return;   
                 }
                 
                 if(rInDia > 3){
-                    win(player2.getUsername());
+                    win(game.player2.getUsername());
                     return;   
                 }
             }
@@ -242,26 +290,32 @@ function check(){
     }
 }
     function win(winner){
+        //block piece placing
+        var fields = document.getElementById("grid").getElementsByTagName("img");
+        for(var i = 0; i < fields.length; i++){
         
+            
+            fields[i].removeAttribute("onclick");
+            
+        }
         //find which player is the winner
-        if(winner.localeCompare(player1.getUsername()) == 0){
+        if(winner.localeCompare(game.player1.getUsername()) == 0){
         
             game.incrPlayer1Score();
-            var string = document.createTextNode(winner + " is the winner!");
-
-        } else if(winner.localeCompare(player2.getUsername()) == 0){
+            var string = document.createTextNode(game.player1.getUsername() + " is the winner!");
+        } else if(winner.localeCompare(game.player2.getUsername()) == 0){
         
             game.incrPlayer2Score();
-            var string = document.createTextNode(winner + " is the winner!");
+            var string = document.createTextNode(game.player2.getUsername() + " is the winner!");
         }
         else{
 
             var string = document.createTextNode("It is a draw!");
 
         }
-        
+        // update score board
         var score = document.getElementById("score");
-        var scoreTxt = game.getPlayer1Score() + " - " + game.getPlayer2Score();
+        var scoreTxt = game.getPlayer1Score() + " - " + game.getPlayer2Score(); 
         
         var winSection = document.createElement("SECTION");
         winSection.setAttribute("id", "winSection");
@@ -274,7 +328,7 @@ function check(){
         
         buttonRematch.src = "images/connect4ImageRematchButton.png";
         buttonRematch.setAttribute("id", "ButtonRematch");
-        buttonRematch.setAttribute("onclick", "resetGrid()");
+        buttonRematch.setAttribute("onclick", "startGame()");
         
         var buttonExit = document.createElement("img");
 
@@ -293,26 +347,6 @@ function check(){
         winSection.appendChild(linkExit);
         document.body.appendChild(winSection);
         score.innerHTML = scoreTxt;
-}
-function resetGrid(){
-    
-    grid = [["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"], 
-    ["x", "x", "x", "x", "x", "x"]];
-    
-    var blanks = document.getElementById("grid").getElementsByTagName("img");
-    
-    for(var i = 0; i < blanks.length; i++){
-        
-        blanks[i].src = "images/connect4ImageGridBlank.png";
-        
-    }
-    document.body.removeChild(document.getElementById("winSection"));
-    
 }
 
 function exit(){
