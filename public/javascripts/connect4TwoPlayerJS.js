@@ -140,6 +140,8 @@ function col7(){
 
 function dropPiece(col, nr){
     
+    var sound = new Audio("connect4Sound.M4A");
+    sound.play();
     var rows = document.getElementsByClassName(col);
     
     var flag = true;
