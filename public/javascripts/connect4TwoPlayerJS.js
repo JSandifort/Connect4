@@ -3,11 +3,8 @@ var counter = 0;
 p1 = new Player(0, "you")
 p2 = new Player(1, "other player")
 var game = new Game(0, p1, p2);
-//var currentTime = (new Date()).getSeconds();
 
-//clock(((new Date()).getSeconds() + currentTime));
-
-function Player(id, username){
+function Player(id, username){  	
     
     this.id = id;
     this.username = username;
@@ -102,18 +99,7 @@ function startGame(){
     p2Section.appendChild(document.createTextNode(game.player2.getUsername()));
     document.body.appendChild(p2Section);
     
-    // create clock
-    
 
-}
-function clock(time){
-    var rest = 15-time;
-    document.getElementById("clock").innerHTML = "0:" + rest; 
-    
-    if(time == 15){
-     clockCounter = 0;
-     counter++;
-    }
 }
 
 function col1(){
@@ -164,6 +150,7 @@ function dropPiece(col, nr){
     }
    
 };
+
 function color(){
     
     if(counter%2 == 0){
