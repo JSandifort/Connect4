@@ -1,10 +1,10 @@
-var clockCounter = 0;
+
 var counter = 0;
 p1 = new Player(0, "you")
 p2 = new Player(1, "other player")
 var game = new Game(0, p1, p2);
 
-function Player(id, username){  	
+function Player(id, username){
     
     this.id = id;
     this.username = username;
@@ -91,16 +91,27 @@ function startGame(){
     // create new name sections
     var p1Section = document.createElement("section");
     p1Section.setAttribute("id","p1Section");
+    
     p1Section.appendChild(document.createTextNode(game.player1.getUsername()));
     document.body.appendChild(p1Section);
     
     var p2Section = document.createElement("section");
     p2Section.setAttribute("id","p2Section");
+
     p2Section.appendChild(document.createTextNode(game.player2.getUsername()));
     document.body.appendChild(p2Section);
     
+    // set color
+
+    if(counter%2 == 0){
+        p1Section.setAttribute("style", "color: #f5756a;");
+    }
+    else{
+    p2Section.setAttribute("style", "color: #f5756a;");
+    }
 
 }
+
 
 function col1(){
     dropPiece("col1", 0);
@@ -126,6 +137,8 @@ function col7(){
 
 function dropPiece(col, nr){
     
+    var sound = new Audio("connect4Sound.M4A");
+    sound.play();
     var rows = document.getElementsByClassName(col);
     
     var flag = true;
@@ -155,10 +168,15 @@ function color(){
     
     if(counter%2 == 0){
         counter++;
+        
+        document.getElementById("p1Section").setAttribute("style", "color: white;");
+        document.getElementById("p2Section").setAttribute("style", "color: #f5756a;");
         return "images/connect4ImageGridYellow.png";
     }
     
     counter++;
+    document.getElementById("p1Section").setAttribute("style", "color: #f5756a;");
+    document.getElementById("p2Section").setAttribute("style", "color: white;");
     return "images/connect4ImageGridRed.png";
 }
 function Place(c, x, y){
