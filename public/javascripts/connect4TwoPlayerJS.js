@@ -164,6 +164,7 @@ function dropPiece(col, nr){
     }
    
 };
+
 function color(){
     
     if(counter%2 == 0){
