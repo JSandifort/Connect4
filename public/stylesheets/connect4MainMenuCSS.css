@@ -62,3 +62,17 @@ body{
     color: #f5756a;
 
 }
+#HTPButton{
+    position: absolute;
+    left: 20px;
+    top: 240px;
+}
+#sectionHowToPlay{
+    height: 300px;
+    width: 500px;
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    background-image: url("../images/connect4ImageHTPBG.png");
+
+}

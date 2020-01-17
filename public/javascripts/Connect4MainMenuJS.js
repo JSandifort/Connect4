@@ -37,12 +37,17 @@ function openSettings(){
     paraFullScreen.appendChild(fullScreenButton);
     paraFullScreen.appendChild(fullScreenText);    
     
+    var howToPlayButton = document.createElement("img");
+    howToPlayButton.src = "images/connect4ImageHTPButton.png";
+    howToPlayButton.setAttribute("id", "HTPButton");
+    howToPlayButton.setAttribute("onclick", "openHTP()");
+
     var sectionSettings = document.createElement("SECTION");
     sectionSettings.setAttribute("id", "settings");
     
-
     sectionSettings.appendChild(settingsExit);
     sectionSettings.appendChild(paraFullScreen);
+    sectionSettings.appendChild(howToPlayButton);
     document.body.appendChild(sectionSettings);
     return;
 }
@@ -102,4 +107,21 @@ function fullScreen(){
         paraFullScreen.appendChild(fullScreenText);
         document.getElementById("settings").appendChild(paraFullScreen); 
     }
+}
+function openHTP(){
+    var sectionHowToPlay = document. createElement("SECTION");
+    sectionHowToPlay.setAttribute("id", "sectionHowToPlay");
+    
+    var sectionHTPExit = document.createElement("img");
+
+    sectionHTPExit.setAttribute("id", "exitButton");
+    sectionHTPExit.setAttribute("onclick", "closeHTP()");
+    sectionHTPExit.src = "images/connect4ImageSettingsExitButton.png";
+
+    sectionHowToPlay.appendChild(sectionHTPExit);
+    document.body.appendChild(sectionHowToPlay);
+    
+}
+function closeHTP(){
+    document.body.removeChild(document.getElementById("sectionHowToPlay"))
 }
