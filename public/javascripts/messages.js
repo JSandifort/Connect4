@@ -2,9 +2,14 @@
 
     exports.O_GAME_STARTED = {
       type: "GAME-STARTED",
-      data: null
+      gameID: null
     };
-    exports.S_GAME_STARTED = JSON.stringify(exports.O_GAME_STARTED);
+    
+    //server to client 
+    exports.O_DRAW = {
+      type: "DRAW"
+    }
+    exports.S_DRAW = JSON.stringify(exports.O_DRAW);
     /*
      * Client to server: game is complete, the winner is ...
      */
@@ -43,7 +48,8 @@
     
     exports.O_VALID_MOVE = {
        type: "VALID_MOVE",
-       data: null
+       col: null,
+       row: null
     }
 
     //server to cient 

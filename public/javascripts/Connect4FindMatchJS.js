@@ -2,6 +2,7 @@
 
 var socket = new WebSocket("ws://localhost:3001");
 var counter = 0;
+var gameID = null;
 
 alert("waiting for players");
 
@@ -17,11 +18,15 @@ socket.onmessage = function(e){
 
         alert("game has started");
         socket.send("understood");
+        gameID = object["gameID"];
         startGame();
 
     } else if(object["type"] === "YOUR_TURN"){
+
         alert("your turn!");
+        socket.send("hello server");
     }else if (object["type"] === "VALID_MOVE"){
+
         dropPiece(object["discType"]);
     }
 
@@ -72,23 +77,23 @@ function startGame(){
     var p1Section = document.createElement("section");
     p1Section.setAttribute("id","p1Section");
     
-    p1Section.appendChild(document.createTextNode(game.player1.getUsername()));
+    p1Section.appendChild(document.createTextNode("player1"));
     document.body.appendChild(p1Section);
     
     var p2Section = document.createElement("section");
     p2Section.setAttribute("id","p2Section");
 
-    p2Section.appendChild(document.createTextNode(game.player2.getUsername()));
+    p2Section.appendChild(document.createTextNode("player2"));
     document.body.appendChild(p2Section);
     
     // set color
-    counter = 0;
-    if(counter%2 == 0){
-        p1Section.setAttribute("style", "color: #f5756a;");
-    }
-    else{
-    p2Section.setAttribute("style", "color: #f5756a;");
-    }
+   // counter = 0;
+   // if(counter%2 == 0){
+    //    p1Section.setAttribute("style", "color: #f5756a;");
+   // }
+   // else{
+   // p2Section.setAttribute("style", "color: #f5756a;");
+   // }
 
 }
 
@@ -101,7 +106,7 @@ function col1(){
     var move = new Move("col1", 0);
     var messageMove = JSON.stringify(move);
 
-    socket.send(messageMove);
+    socket.send("hello");
     
 };
 function col2(){
@@ -230,6 +235,8 @@ if (valString.length < 2) {
 }
 
 function Move(col, nr){
+
+    this.gameID = gameID;
     this.type = "POSSIBLE_MOVE";
     this.col = col;
     this.nr = nr;

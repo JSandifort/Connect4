@@ -39,10 +39,14 @@ wss.on("connection", function(ws){
         var ws1 = currentGame.getWS1();
         var ws2 = currentGame.getWS2();
 
-        ws1.send(messages.S_GAME_STARTED);
-        ws2.send(messages.S_GAME_STARTED);
+        var object = messages.O_GAME_STARTED;
+        object["gameID"] = currentGame.getID;
+        var messageGame = JSON.stringify(object);
 
-        ws.send(JSON.stringify(messages.O_YOUR_TURN));
+        ws1.send(messageGame);
+        ws2.send(messageGame);
+
+        ws1.send(JSON.stringify(messages.O_YOUR_TURN));
         
         ++numberOfGames;
         currentGame = new Game(numberOfGames);
@@ -50,15 +54,18 @@ wss.on("connection", function(ws){
     };
 
     games[numberOfGames] = currentGame;
-    console.log(games);
+   //console.log(games);
     
     ws.on("message", function incoming(message){
 
-        var object = JSON.stringify(message);
+        console.log(message);
+        var object = JSON.parse(message);
+        console.log(object);
 
         if(object["type"] === "POSSIBLE_MOVE"){
 
             var nr = object["nr"];
+            var col = object["col"];
             var row = dropPiece(object["col"], object["nr"]);
 
             if(row == null){
@@ -67,7 +74,9 @@ wss.on("connection", function(ws){
 
             }else{
                 
-                var counter = currentGame.getCounter;
+                var gameID = object["gameID"];
+                var game = games[gameID];
+                var counter = game.getCounter;
 
                 if((counter-1)%2 == 0){
                 
@@ -79,8 +88,42 @@ wss.on("connection", function(ws){
                    grid[nr][row] = "r";
                 }
 
-                check();
+                var check = check(counter, gameID);
 
+                if(check === "DRAW"){
+
+                    ws1 = game.getWS1;
+                    ws2 = game.getWS2;
+
+                    ws1.send(messages.S_DRAW);
+                    ws2.send(messages.S_DRAW);
+
+                }else if(check === "CONTINUE"){
+                    
+                    var valid = messages.O_VALID_MOVE;
+                    valid["col"] = col;
+                    valid["row"] = row;
+                    
+                    ws1.send(JSON.stringify(valid));
+                    ws2.send(JSON.stringify(valid));
+                    
+                    
+                    if((counter-1)%2 == 0){
+                        
+                        ws1.send(JSON.stringify(messages.O_YOUR_TURN))
+
+                    }
+    
+                    if((counter-1)%2 == 1){
+                       
+                        ws2.send(JSON.stringify(messages.O_YOUR_TURN))
+
+                    }
+
+                }else{
+
+
+                }
 
             }
 
@@ -91,7 +134,7 @@ wss.on("connection", function(ws){
 
     });
     
-    ws.close();
+    //ws.close();
 
 
 });
@@ -188,13 +231,15 @@ function dropPiece(col, nr){
 };
 
     
-function check(counter){
+function check(counter, gameID){
+
     if(counter < 7){
-        return;
+
+        return "CONTINUE";
     }
 
     if(counter == 42){
-        win("draw");
+        return "DRAW";
     }
 
     //vertical check
@@ -216,13 +261,11 @@ function check(counter){
             }
             if(yInCol > 3){
                 
-                win(game.player1.getUsername());
-                return;
+                return games[gameID].getWS1;
             }
             if(rInCol > 3){
                 
-                win(game.player2.getUsername());
-                return;
+                return games[gameID].getWS2;
             }
             
         }    
@@ -252,13 +295,15 @@ function check(counter){
             }
     
             if(yInRow > 3){
-                win(game.player1.getUsername());
-                return;   
+                
+                return games[gameID].getWS1;
+
             }
             
             if(rInRow > 3){
-                win(game.player2.getUsername());
-                return;   
+               
+                return games[gameID].getWS2;
+        
             }
         }
     }
@@ -280,13 +325,15 @@ function check(counter){
                 //yInDia = 0;
             }  
             if(yInDia > 3){
-                win(game.player1.getUsername());
-                return;   
+                
+                return games[gameID].getWS1;
+
             }
             
             if(rInDia > 3){
-                win(game.player2.getUsername());
-                return;   
+              
+                return games[gameID].getWS2;
+
             }
         }
     }
@@ -307,13 +354,15 @@ function check(counter){
                     //yInDia = 0;
                 }  
                 if(yInDia > 3){
-                    win(game.player1.getUsername());
-                    return;   
+                    
+                    return games[gameID].getWS1;
+
                 }
                 
                 if(rInDia > 3){
-                    win(game.player2.getUsername());
-                    return;   
+                   
+                    return games[gameID].getWS2;
+ 
                 }
             }
        }   
