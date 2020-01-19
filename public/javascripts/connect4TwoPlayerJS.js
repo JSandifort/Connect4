@@ -58,6 +58,7 @@ if (valString.length < 2) {
 
 // loading the page
 function startGame(){
+    
     var functions = ["col1()", "col2()", "col3()", "col4()", "col5()", "col6()", "col7()"];
 
     grid = [["x", "x", "x", "x", "x", "x"], 
@@ -329,11 +330,11 @@ function check(){
         if(winner.localeCompare(game.player1.getUsername()) == 0){
         
             game.incrPlayer1Score();
-            var string = document.createTextNode(game.player1.getUsername() + " is the winner!");
+            var string = document.createTextNode(game.player1.getUsername() + " won the game!");
         } else if(winner.localeCompare(game.player2.getUsername()) == 0){
         
             game.incrPlayer2Score();
-            var string = document.createTextNode(game.player2.getUsername() + " is the winner!");
+            var string = document.createTextNode(game.player2.getUsername() + " won the game!");
         }
         else{
 
