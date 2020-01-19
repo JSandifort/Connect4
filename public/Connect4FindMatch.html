@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Two Players</title>
+        <link href="stylesheets/connect4GameCSS.css" rel="stylesheet" type="text/css">
+    </head>
+    <body onload="startGame()">
+        <section id="Buttons">
+            <a href="Connect4MainMenu.html"><img  id="pExit" src="images/icons/exit_blue.png" alt=""></a>
+        </section>
+        
+        <section id="grid">
+            <p>
+                <img onclick="col1()" class="col1" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col2()" class="col2" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col3()" class="col3" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col4()" class="col4" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col5()" class="col5" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col6()" class="col6" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col7()" class="col7" src="images/Connect4ImageGridBlank.png">
+            </p>
+            <p>
+                <img onclick="col1()" class="col1" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col2()" class="col2" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col3()" class="col3" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col4()" class="col4" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col5()" class="col5" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col6()" class="col6" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col7()" class="col7" src="images/Connect4ImageGridBlank.png">
+            </p>
+            <p>
+                <img onclick="col1()" class="col1" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col2()" class="col2" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col3()" class="col3" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col4()" class="col4" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col5()" class="col5" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col6()" class="col6" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col7()" class="col7" src="images/Connect4ImageGridBlank.png">
+            </p>
+            <p>
+                <img onclick="col1()" class="col1" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col2()" class="col2" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col3()" class="col3" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col4()" class="col4" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col5()" class="col5" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col6()" class="col6" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col7()" class="col7" src="images/Connect4ImageGridBlank.png">
+            </p>
+            <p>
+                <img onclick="col1()" class="col1" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col2()" class="col2" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col3()" class="col3" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col4()" class="col4" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col5()" class="col5" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col6()" class="col6" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col7()" class="col7" src="images/Connect4ImageGridBlank.png">
+            </p>
+            <p>
+                <img onclick="col1()" class="col1" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col2()" class="col2" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col3()" class="col3" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col4()" class="col4" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col5()" class="col5" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col6()" class="col6" src="images/Connect4ImageGridBlank.png">
+                <img onclick="col7()" class="col7" src="images/Connect4ImageGridBlank.png">
+            </p>
+        </section>
+       
+        <div id="clock">
+        
+            <label id="minutes">00</label>:<label id="seconds">00</label>
+            
+        </div>
+        
+        </section>
+        <p id = "score">0 - 0</p>
+        
+        <script src="javascripts/Connect4FindMatchJS.js "></script>    
+    </body>
+</html>

@@ -1,4 +1,4 @@
-
+//@ts-check
 var counter = 0;
 p1 = new Player(0, "you")
 p2 = new Player(1, "other player")
