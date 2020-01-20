@@ -2,7 +2,10 @@
 
 var socket = new WebSocket("ws://localhost:3001");
 var counter = 0;
-var gameID = null;
+var gameID;
+var userID;
+var opponentID;
+var clickable = false;
 
 alert("waiting for players");
 
@@ -12,29 +15,42 @@ socket.onmessage = function(e){
 
     console.log(object["type"]);
     console.log(object);
-    socket.send("held");
+    //socket.send("held");
 
     if(object["type"] === "GAME_STARTED"){
 
         alert("game has started");
-        socket.send("understood");
+       // socket.send("understood");
         gameID = object["gameID"];
+        userID = object["userID"];
+        opponentID = object["opponentID"];
+        console.log(gameID);
+
         startGame();
 
     } else if(object["type"] === "YOUR_TURN"){
 
         alert("your turn!");
-        socket.send("hello server");
-    }else if (object["type"] === "VALID_MOVE"){
+        clickable = true;
+       // socket.send("server");
 
-        dropPiece(object["discType"]);
+    } else if (object["type"] === "VALID_MOVE"){
+
+        dropPiece(object["col"], object["row"], object["disctype"]);
+    } else if (object["type"] === "INVALID_MOVE"){
+
+        alert("Invalid move, try again!");
+        clickable = true;
+    }else if (object["type"] === "GAME_WON_BY"){
+
+        win(object["winner"], object["userScore"], object["opponentScore"]);
     }
 
 }
 
 socket.onopen = function(){
-    socket.send("hekkie");
-
+    
+    
 };
 
 var grid = null;
@@ -77,13 +93,13 @@ function startGame(){
     var p1Section = document.createElement("section");
     p1Section.setAttribute("id","p1Section");
     
-    p1Section.appendChild(document.createTextNode("player1"));
+    p1Section.appendChild(document.createTextNode(userID));
     document.body.appendChild(p1Section);
     
     var p2Section = document.createElement("section");
     p2Section.setAttribute("id","p2Section");
 
-    p2Section.appendChild(document.createTextNode("player2"));
+    p2Section.appendChild(document.createTextNode(opponentID));
     document.body.appendChild(p2Section);
     
     // set color
@@ -100,47 +116,151 @@ function startGame(){
 
 function col1(){
    
+    if(clickable){
+    
     var sound = new Audio("connect4Sound.M4A");
     sound.play();
 
-    var move = new Move("col1", 0);
+    var move = new Move("col1", 0, gameID);
+    console.log(move);
     var messageMove = JSON.stringify(move);
 
-    socket.send("hello");
-    
+    socket.send(messageMove);
+    clickable = false;
+
+    }else{
+
+        alert("Wait for your turn!");
+    }
 };
 function col2(){
-    dropPiece("col2", 1);
+
+    if(clickable){
+    
+        var sound = new Audio("connect4Sound.M4A");
+        sound.play();
+    
+        var move = new Move("col2", 1, gameID);
+        console.log(move);
+        var messageMove = JSON.stringify(move);
+    
+        socket.send(messageMove);
+        clickable = false;
+    
+        }else{
+    
+            alert("Wait for your turn!");
+        }
 };
 function col3(){
-    dropPiece("col3", 2);
+
+    if(clickable){
+    
+    var sound = new Audio("connect4Sound.M4A");
+    sound.play();
+
+    var move = new Move("col3", 2, gameID);
+    console.log(move);
+    var messageMove = JSON.stringify(move);
+
+    socket.send(messageMove);
+    clickable = false;
+
+    }else{
+
+        alert("Wait for your turn!");
+    }
 };
 function col4(){
-    dropPiece("col4", 3);
+
+    if(clickable){
+    
+    var sound = new Audio("connect4Sound.M4A");
+    sound.play();
+
+    var move = new Move("col4", 3, gameID);
+    console.log(move);
+    var messageMove = JSON.stringify(move);
+
+    socket.send(messageMove);
+    clickable = false;
+
+    }else{
+
+        alert("Wait for your turn!");
+    }
 };
 function col5(){
-    dropPiece("col5", 4);
+
+    if(clickable){
+    
+    var sound = new Audio("connect4Sound.M4A");
+    sound.play();
+
+    var move = new Move("col5", 4, gameID);
+    console.log(move);
+    var messageMove = JSON.stringify(move);
+
+    socket.send(messageMove);
+    clickable = false;
+
+    }else{
+
+        alert("Wait for your turn!");
+    }
 };
 function col6(){
-    dropPiece("col6", 5);
+
+    if(clickable){
+    
+        var sound = new Audio("connect4Sound.M4A");
+        sound.play();
+    
+        var move = new Move("col6", 5, gameID);
+        console.log(move);
+        var messageMove = JSON.stringify(move);
+    
+        socket.send(messageMove);
+        clickable = false;
+    
+        }else{
+    
+            alert("Wait for your turn!");
+        }
 };
 function col7(){
-    dropPiece("col7", 6);
+
+    if(clickable){
+    
+        var sound = new Audio("connect4Sound.M4A");
+        sound.play();
+    
+        var move = new Move("col7", 6, gameID);
+        console.log(move);
+        var messageMove = JSON.stringify(move);
+    
+        socket.send(messageMove);
+        clickable = false;
+    
+        }else{
+    
+            alert("Wait for your turn!");
+        }
 };
 
 function dropPiece(col, nr, discType){
     
-   
     var rows = document.getElementsByClassName(col);
     rows[nr].src = color(discType);
-            
-           
+                  
    
 };
 
 function color(discType){
+
+    console
     
-    if(discType == 0){
+    if(discType){
 
         //document.getElementById("p1Section").setAttribute("style", "color: white;");
         //document.getElementById("p2Section").setAttribute("style", "color: #f5756a;");
@@ -152,7 +272,7 @@ function color(discType){
     return "images/connect4ImageGridRed.png";
 }
 
-function win(winner){
+function win(winner, userScore, opponentScore){
     //block piece placing
     var fields = document.getElementById("grid").getElementsByTagName("img");
     for(var i = 0; i < fields.length; i++){
@@ -163,14 +283,12 @@ function win(winner){
     }
 
     //find which player is the winner
-    if(winner.localeCompare(game.player1.getUsername()) == 0){
+    if(winner === userID){
     
-        game.incrPlayer1Score();
-        var string = document.createTextNode(game.player1.getUsername() + " is the winner!");
-    } else if(winner.localeCompare(game.player2.getUsername()) == 0){
+        var string = document.createTextNode(userID + " is the winner!");
+    } else if(winner === opponentID){
     
-        game.incrPlayer2Score();
-        var string = document.createTextNode(game.player2.getUsername() + " is the winner!");
+        var string = document.createTextNode(opponentID + " is the winner!");
     }
     else{
 
@@ -179,7 +297,7 @@ function win(winner){
     }
     // update score board
     var score = document.getElementById("score");
-    var scoreTxt = game.getPlayer1Score() + " - " + game.getPlayer2Score(); 
+    var scoreTxt = userScore + " - " + opponentScore; 
     
     var winSection = document.createElement("SECTION");
     winSection.setAttribute("id", "winSection");
@@ -234,7 +352,7 @@ if (valString.length < 2) {
 }
 }
 
-function Move(col, nr){
+function Move(col, nr, gameID){
 
     this.gameID = gameID;
     this.type = "POSSIBLE_MOVE";

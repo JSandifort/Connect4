@@ -1,8 +1,10 @@
 (function(exports) {
 
     exports.O_GAME_STARTED = {
-      type: "GAME-STARTED",
-      gameID: null
+      type: "GAME_STARTED",
+      gameID: null,
+      userID: null,
+      opponentID: null
     };
     
     //server to client 
@@ -13,10 +15,12 @@
     /*
      * Client to server: game is complete, the winner is ...
      */
-    exports.T_GAME_WON_BY = "GAME-WON-BY";
+    exports.T_GAME_WON_BY = "GAME_WON_BY";
     exports.O_GAME_WON_BY = {
       type: exports.T_GAME_WON_BY,
-      data: null
+      winner: null,
+      userScore: 0,
+      opponentScore: 0
     };
   
     /*
@@ -49,7 +53,8 @@
     exports.O_VALID_MOVE = {
        type: "VALID_MOVE",
        col: null,
-       row: null
+       row: null,
+       disctype: null
     }
 
     //server to cient 
