@@ -20,3 +20,10 @@ app.use("/", function(req, res){
 });
 
 app.use("/Connect4FindMatch", findMatchRouter);
+
+app.use("/", function(req, res){
+
+    res.sendFile('public/Connect4MainMenu.html', { root: "./" });
+
+
+});

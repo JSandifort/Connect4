@@ -5,7 +5,7 @@ var router = express.Router();
 var http = require("http");
 var websocket = require("ws");
 
-var port = process.argv[3];
+var port = 3001;
 var app = express();
 
 var messages = require("../public/javascripts/messages");
@@ -31,6 +31,8 @@ var userID = 0;
 
 wss.on("connection", function (ws) {
 
+  //con.id = connectionID++;
+  currentGame.addPlayer(ws, userID++);
   const gameId = currentGame.id;
 
   ws.on("close", function () {
@@ -47,10 +49,6 @@ wss.on("connection", function (ws) {
     }
     
   });
-
-
-  //con.id = connectionID++;
-  currentGame.addPlayer(ws, userID++);
 
   if (currentGame.isFull() == true) {
 
@@ -77,7 +75,7 @@ wss.on("connection", function (ws) {
   };
 
   games[numberOfGames] = currentGame;
-  //console.log(games);
+  console.log(games);
 
   ws.on("message", function incoming(message) {
 
@@ -192,6 +190,25 @@ wss.on("connection", function (ws) {
       }
 
 
+    }else if(object["type"] === "POSSIBLE_REMATCH"){
+
+      var count = games[object["gameID"]].getRematchCount();
+      count++;
+      games[object["gameID"]].setRematch(count);
+      
+      if(games[object["gameID"]].getRematchCount() === 2){
+
+        var rematch = JSON.stringify(messages.O_REMATCH_CONFIRMED);
+        games[object["gameID"]].getWS1().send(rematch);
+        games[object["gameID"]].getWS2().send(rematch);
+
+        games[object["gameID"]].ressetCounter();
+        games[object["gameID"]].setRematch(0);
+        games[object["gameID"]].getWS1().send(JSON.stringify(messages.O_YOUR_TURN));
+
+
+      }
+
     }
 
 
@@ -218,6 +235,8 @@ function Game(id) {
 
   this.isPaused = true;
   this.onTurn = null;
+
+  this.rematchCount = 0;
 
   this.turn = function (player) { this.onTurn = player };
 
@@ -253,6 +272,9 @@ function Game(id) {
       return false
     }
   }
+
+  this.setRematch = function(count){this.rematchCount = count};
+  this.getRematchCount = function(){return this.rematchCount};
 
   this.getWS1 = function () { return this.player1 };
   this.getWS2 = function () { return this.player2 };
