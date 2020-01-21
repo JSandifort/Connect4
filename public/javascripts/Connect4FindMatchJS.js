@@ -48,6 +48,7 @@ socket.onmessage = function (e) {
 
 		alert("Game was aborted by opponent");
 		document.location.replace("/Connect4MainMenu");
+	
 	}else if (object["type"] === "REMATCH_CONFIRMED"){
 
 		startGame();
@@ -321,14 +322,58 @@ function win(winner, userScore, opponentScore) {
 	var linkExit = document.createElement("A");
 	linkExit.href = "Connect4MainMenu.html";
 
+	var clock = document.createElement("div");
+	clock.setAttribute("id","clockCountDown");
+	clock.innerHTML = ":";
+
+	var minutes = document.createElement("label");
+	minutes.setAttribute("id", "winMinutes");
+
+	var seconds = document.createElement("label");
+	seconds.setAttribute("id", "winSeconds");
 
 	linkExit.appendChild(buttonExit);
 	p.appendChild(string);
 	winSection.appendChild(p);
 	winSection.appendChild(buttonRematch);
 	winSection.appendChild(linkExit);
+	winSection.appendChild(clock);
+	winSection.appendChild(minutes);
+	winSection.appendChild(seconds);
 	document.body.appendChild(winSection);
 	score.innerHTML = scoreTxt;
+
+	//simple timer for the elapsed time
+var pause = false;
+var timer = setInterval(setTime, 1000);
+var timeElapsed = 30;
+
+function setTime() {
+
+	if(!pause){
+		--timeElapsed;
+		seconds.innerHTML = pad(timeElapsed % 60);
+		minutes.innerHTML = pad(parseInt(timeElapsed / 60));
+
+		if(timeElapsed <= 0){
+
+			pause = true;
+			timeElapsed = 30;
+			rematch();
+			
+		}
+	}
+}
+
+function pad(val) {
+	var valString = val + "";
+	if (valString.length < 2) {
+		return "0" + valString;
+	} else {
+		return valString;
+	}
+}
+
 }
 
 //simple timer for the elapsed time
@@ -370,6 +415,7 @@ function Rematch(gameID){
 
 function rematch(){
 
+	alert("Waiting for other player to confirm");
 	var rematch = new Rematch(gameID);
 	var messageRematch = JSON.stringify(rematch);
 	socket.send(messageRematch);

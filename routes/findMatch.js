@@ -199,6 +199,7 @@ wss.on("connection", function (ws) {
       if(games[object["gameID"]].getRematchCount() === 2){
 
         var rematch = JSON.stringify(messages.O_REMATCH_CONFIRMED);
+        games[object["gameID"]].resetBoard();
         games[object["gameID"]].getWS1().send(rematch);
         games[object["gameID"]].getWS2().send(rematch);
 
@@ -214,9 +215,6 @@ wss.on("connection", function (ws) {
 
 
   });
-
-  //ws.close();
-
 
 });
 
@@ -247,6 +245,14 @@ function Game(id) {
   ["x", "x", "x", "x", "x", "x"],
   ["x", "x", "x", "x", "x", "x"],
   ["x", "x", "x", "x", "x", "x"]];
+
+  this.resetBoard = function(){ this.board = [["x", "x", "x", "x", "x", "x"],
+  ["x", "x", "x", "x", "x", "x"],
+  ["x", "x", "x", "x", "x", "x"],
+  ["x", "x", "x", "x", "x", "x"],
+  ["x", "x", "x", "x", "x", "x"],
+  ["x", "x", "x", "x", "x", "x"],
+  ["x", "x", "x", "x", "x", "x"]];};
 
   this.addPlayer = function (socket, id) {
 

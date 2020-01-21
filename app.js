@@ -14,16 +14,11 @@ var findMatchRouter = require("./routes/findMatch");
 // find match button is pressed
 app.use("/", function(req, res){
 
-    res.sendFile('public/Connect4Intro.html', { root: "./" });
+    res.sendFile('public/Connect4MainMenu.html', { root: "./" });
 
 
 });
 
 app.use("/Connect4FindMatch", findMatchRouter);
 
-app.use("/", function(req, res){
 
-    res.sendFile('public/Connect4MainMenu.html', { root: "./" });
-
-
-});
