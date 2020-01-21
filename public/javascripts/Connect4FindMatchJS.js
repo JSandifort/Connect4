@@ -53,6 +53,9 @@ socket.onmessage = function (e) {
 
 		startGame();
 
+	}else if(object["type"] === "DRAW"){
+
+		win("DRAW", 0 , 0);
 	}
 
 }
@@ -277,7 +280,6 @@ function win(winner, userScore, opponentScore) {
 	//block piece placing
 	var fields = document.getElementById("grid").getElementsByTagName("img");
 	for (var i = 0; i < fields.length; i++) {
-
 
 		fields[i].removeAttribute("onclick");
 

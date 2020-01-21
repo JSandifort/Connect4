@@ -122,6 +122,7 @@ wss.on("connection", function (ws) {
 
         } else if (checking === "VALID_MOVE") {
 
+          console.log(games[gameID].getBoard());
           var valid = messages.O_VALID_MOVE;
           valid["col"] = col;
           valid["row"] = row;
@@ -253,6 +254,8 @@ function Game(id) {
   ["x", "x", "x", "x", "x", "x"],
   ["x", "x", "x", "x", "x", "x"],
   ["x", "x", "x", "x", "x", "x"]];};
+  
+  this.getBoard = function(){return this.board};
 
   this.addPlayer = function (socket, id) {
 
@@ -388,7 +391,7 @@ function check(counter, gameID) {
   // x = select column
   // y = select row
 
-  for (var i = 0; i < games[gameID].getColLength(0).length; i++) {
+  for (var i = 0; i < games[gameID].getColLength(0); i++) {
     var rInRow = 0;
     var yInRow = 0;
     for (var j = 0; j < games[gameID].getLength(); j++) {

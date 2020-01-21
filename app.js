@@ -7,7 +7,6 @@ var app = express();
 app.use(express.static(__dirname + "/public"));
 http.createServer(app).listen(port);
 
-var splashRouter = require("./routes/splash");
 var mainMenuRouter = require("./routes/mainMenu");
 var findMatchRouter = require("./routes/findMatch");
 
@@ -15,7 +14,6 @@ var findMatchRouter = require("./routes/findMatch");
 app.use("/", function(req, res){
 
     res.sendFile('public/Connect4MainMenu.html', { root: "./" });
-
 
 });
 
